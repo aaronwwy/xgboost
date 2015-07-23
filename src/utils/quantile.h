@@ -413,6 +413,12 @@ struct WXQSummary : public WQSummary<DType, RType> {
             if (dx2 >= maxdx2) break;
             while (i < end &&
                    dx2 >= src.data[i + 1].rmax + src.data[i + 1].rmin) ++i;
+            if (i == end) {
+              utils::Printf("INFO: i==end reached, dx2=%g, i=%lu, end=%lu, mrange=%g, k=%lu, n=%lu, maxsize=%lu\n",
+                           dx2, i, end, mrange, k, n, maxsize);
+              src.Print();
+              break;
+            }
             if (dx2 < src.data[i].rmin_next() + src.data[i + 1].rmax_prev()) {
               if (i != lastidx) {
                 this->data[this->size++] = src.data[i]; lastidx = i;
